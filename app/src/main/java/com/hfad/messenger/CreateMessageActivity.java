@@ -1,52 +1,28 @@
 package com.hfad.messenger;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.EditText; // 必須匯入 EditText 類別，因為要在 activity 的程式碼中使用它
 
-public class CreateMessageActivity extends AppCompatActivity {
+public class CreateMessageActivity extends Activity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_message);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_create_message, menu);
-        return true;
-    }
+    // 在按鈕被點擊時，屬發 onSendMessage() 方法
+    public void onSendMessage(View view) {
+        EditText messageView = (EditText) findViewById(R.id.message);
+        String messageText = messageView.getText().toString();
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        Intent intent = new Intent(this, ReceiveMessageActivity.class); // 建立 intent，然後將文字漆加到裡頭
+        intent.putExtra(ReceiveMessageActivity.EXTRA_MESSAGE,  messageText);  // 使用常數作為這項額外資訊的名稱，確保
+                                                                              // CreateMessageActivity 與 ReceiveMessageActivity
+                                                                              // 使用相同的字串。
+        startActivity(intent);  // 使用 Intent 啟動 ReceiveMessageActivity
     }
 }

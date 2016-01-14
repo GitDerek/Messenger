@@ -19,10 +19,9 @@ public class CreateMessageActivity extends Activity {
         EditText messageView = (EditText) findViewById(R.id.message);
         String messageText = messageView.getText().toString();
 
-        Intent intent = new Intent(this, ReceiveMessageActivity.class); // 建立 intent，然後將文字漆加到裡頭
-        intent.putExtra(ReceiveMessageActivity.EXTRA_MESSAGE,  messageText);  // 使用常數作為這項額外資訊的名稱，確保
-                                                                              // CreateMessageActivity 與 ReceiveMessageActivity
-                                                                              // 使用相同的字串。
+        Intent intent = new Intent(Intent.ACTION_SEND); // 代替建立明確指定 ReceiveMessageActivity 的 intent，改為建立使用 send action 的 Intent
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT,  messageText);
         startActivity(intent);  // 使用 Intent 啟動 ReceiveMessageActivity
     }
 }

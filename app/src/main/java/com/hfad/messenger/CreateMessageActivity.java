@@ -22,6 +22,8 @@ public class CreateMessageActivity extends Activity {
         Intent intent = new Intent(Intent.ACTION_SEND); // 代替建立明確指定 ReceiveMessageActivity 的 intent，改為建立使用 send action 的 Intent
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT,  messageText);
-        startActivity(intent);  // 使用 Intent 啟動 ReceiveMessageActivity
+        String chooserTitle = getString(R.string.chooser);  // 取得選擇器的標題。 getString() 方法被用來取得字串資源的值。
+        Intent chooserIntent = Intent.createChooser(intent, chooserTitle);
+        startActivity(chooserIntent);  // 啟動使用者選取的 activity
     }
 }
